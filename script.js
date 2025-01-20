@@ -28,7 +28,7 @@ function storeInput(e) {
     // If checkbox is not checked, clear the stored credentials
     localStorage.removeItem("username");
     localStorage.removeItem("password");
-    alert("Stored credentials removed.");
+    alert("Logged in as username");
   }
 
   // Check if there are saved details and show the existing user button
