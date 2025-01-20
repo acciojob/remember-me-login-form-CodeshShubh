@@ -1,35 +1,41 @@
-//your JS code here. If required.
+let btn1 = document.getElementById("submit");
+let existingUserBtn = document.getElementById("existing");
 
+// Add event listener to the submit button
+btn1.addEventListener("click", storeInput);
 
-let btn1 = document.getElementById('submit');
+// Function to handle form submission
+function storeInput(e) {
+  e.preventDefault(); // Prevent default form submission
 
-btn1.addEventListener('click', StoreInput);
+  // Get user inputs
+  let userName = document.getElementById("username").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let checkbox = document.getElementById("checkbox").checked;
 
-function StoreInput(e){
-
-    e.preventDefault()
-let userName = document.getElementById('username').value.trim();
-let password = document.getElementById('password').value.trim();
-let checkbox = document.getElementById('checkbox').checked;
-	if (!userName || !password) {
+  // Validate inputs
+  if (!userName || !password) {
     alert("Please fill in both username and password.");
     return;
   }
-	if(checkbox){
+
+  // If checkbox is checked, store credentials in localStorage
+  if (checkbox) {
     localStorage.setItem("username", userName);
     localStorage.setItem("password", password);
     alert(`Logged in as ${userName}`);
-    }else{
-        localStorage.removeItem("username");
+  } else {
+    // If checkbox is not checked, clear the stored credentials
+    localStorage.removeItem("username");
     localStorage.removeItem("password");
     alert("Stored credentials removed.");
-    }
-    toggleExistingUserButton();
+  }
 
-    
+  // Check if there are saved details and show the existing user button
+  toggleExistingUserButton();
 }
 
-
+// Function to toggle the "Login as existing user" button
 function toggleExistingUserButton() {
   let savedUsername = localStorage.getItem("username");
   if (savedUsername) {
@@ -41,3 +47,14 @@ function toggleExistingUserButton() {
 
 // Add event listener to the existing user button
 existingUserBtn.addEventListener("click", loginAsExistingUser);
+
+// Function to handle existing user login
+function loginAsExistingUser() {
+  let savedUsername = localStorage.getItem("username");
+  if (savedUsername) {
+    alert(`Logged in as ${savedUsername}`);
+  }
+}
+
+// Check on page load if there are saved details
+toggleExistingUserButton();
